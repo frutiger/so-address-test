@@ -1,8 +1,12 @@
 #include <factory.h>
 
-#include <bslma_sharedptrrep.h>
-
-void Factory::print()
+Value Factory::make()
 {
-    printAddress(&BloombergLP::bslma::SharedPtrRep::managedPtrDeleter);
+    Value result;
+    result.d_function = &Factory::noop;
+    printAddress("factory", result.d_function);
+}
+
+void Factory::noop()
+{
 }

@@ -1,31 +1,39 @@
 #ifndef INCLUDED_FACTORY
 #define INCLUDED_FACTORY
 
-#ifndef INCLUDED_BSL_IOMANIP
-#include <bsl_iomanip.h>
+#ifndef INCLUDED_IOMANIP
+#include <iomanip>
 #endif
 
-#ifndef INCLUDED_BSL_IOSTREAM
-#include <bsl_iostream.h>
+#ifndef INCLUDED_IOSTREAM
+#include <iostream>
 #endif
+
+struct Value
+{
+    typedef void (*Function)();
+    Function d_function;
+};
 
 struct Factory
 {
-    static void print();
+    static Value make();
+    static void noop();
 
     template <class TYPE>
-    static void printAddress(const TYPE& value);
+    static void printAddress(const char *label, const TYPE& value);
 };
 
 template <class TYPE>
-void Factory::printAddress(const TYPE& value)
+void Factory::printAddress(const char *label, const TYPE& value)
 {
+    std::cout << label << ": ";
     auto asBuffer = reinterpret_cast<const unsigned char *>(&value);
     for (int i = sizeof(size_t) - 1; i >= 0; --i) {
-        bsl::cout << bsl::setw(2) << bsl::setfill('0') << bsl::hex
+        std::cout << std::setw(2) << std::setfill('0') << std::hex
                   << static_cast<int>(asBuffer[i]);
     }
-    bsl::cout << '\n';
+    std::cout << '\n';
 }
 
 #endif

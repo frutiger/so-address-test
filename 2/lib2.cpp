@@ -1,11 +1,10 @@
 #include <lib2.h>
 
 #include <factory.h>
-#include <bslma_sharedptrrep.h>
 
 void ObjectTwo::print()
 {
-    Factory::print();
-    Factory::printAddress(&BloombergLP::bslma::SharedPtrRep::managedPtrDeleter);
+    Value value = Factory::make();
+    Factory::printAddress("lib2   ", value.d_function);
 }
 
