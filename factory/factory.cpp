@@ -4,7 +4,8 @@ Value Factory::make()
 {
     Value result;
     result.d_function = &Factory::noop;
-    printAddress("factory", result.d_function);
+    printAddress("factory address", &Factory::noop);
+    printAddress("factory value  ", result.d_function);
 }
 
 void Factory::noop()

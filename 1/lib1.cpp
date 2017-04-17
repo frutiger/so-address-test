@@ -5,6 +5,7 @@
 void ObjectOne::print()
 {
     Value value = Factory::make();
-    Factory::printAddress("lib1   ", value.d_function);
+    Factory::printAddress("lib1 address   ", &Factory::noop);
+    Factory::printAddress("lib1 value     ", value.d_function);
 }
 
