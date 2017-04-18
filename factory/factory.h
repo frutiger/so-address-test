@@ -13,11 +13,17 @@ struct Value
 {
     typedef void (*Function)();
     Function d_function;
+    virtual int constant();
+};
+
+struct Value2 : Value
+{
+    int constant() override;
 };
 
 struct Factory
 {
-    static Value make();
+    static Value *make();
     static void noop();
 
     template <class TYPE>
