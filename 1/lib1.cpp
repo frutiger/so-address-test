@@ -4,8 +4,11 @@
 
 void ObjectOne::print()
 {
-    Value *value = Factory::make();
-    Factory::printAddress("lib1 address   ", &Factory::noop);
-    Factory::printAddress("lib1 value     ", value->d_function);
+    printAddress("lib1", &Factory::noop);
+}
+
+extern "C" void ObjectOne_print()
+{
+    ObjectOne::print();
 }
 

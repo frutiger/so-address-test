@@ -9,29 +9,17 @@
 #include <iostream>
 #endif
 
-struct Value
-{
-    typedef void (*Function)();
-    Function d_function;
-    virtual int constant();
-};
-
-struct Value2 : Value
-{
-    int constant() override;
-};
-
 struct Factory
 {
-    static Value *make();
     static void noop();
-
-    template <class TYPE>
-    static void printAddress(const char *label, const TYPE& value);
 };
 
+inline void Factory::noop()
+{
+}
+
 template <class TYPE>
-void Factory::printAddress(const char *label, const TYPE& value)
+static void printAddress(const char *label, const TYPE& value)
 {
     std::cout << label << ": ";
     auto asBuffer = reinterpret_cast<const unsigned char *>(&value);
