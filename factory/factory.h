@@ -1,33 +1,25 @@
 #ifndef INCLUDED_FACTORY
 #define INCLUDED_FACTORY
 
-#ifndef INCLUDED_IOMANIP
-#include <iomanip>
+#ifndef INCLUDED_CSTDIO
+#include <cstdio>
+#define INCLUDED_CSTDIO
 #endif
 
-#ifndef INCLUDED_IOSTREAM
-#include <iostream>
+#ifndef INCLUDED_CSTDDEF
+#include <cstddef>
+#define INCLUDED_CSTDDEF
 #endif
 
-struct Factory
-{
-    static void noop();
+struct Factory {
+    Factory();
+    static Factory *get();
 };
 
-inline void Factory::noop()
+template <class T>
+void printAddress(const char *label, const T& value)
 {
-}
-
-template <class TYPE>
-static void printAddress(const char *label, const TYPE& value)
-{
-    std::cout << label << ": ";
-    auto asBuffer = reinterpret_cast<const unsigned char *>(&value);
-    for (int i = sizeof(size_t) - 1; i >= 0; --i) {
-        std::cout << std::setw(2) << std::setfill('0') << std::hex
-                  << static_cast<int>(asBuffer[i]);
-    }
-    std::cout << '\n';
+    std::printf("%s: 0x%016lx\n", label, (std::ptrdiff_t)(value));
 }
 
 #endif

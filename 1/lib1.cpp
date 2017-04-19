@@ -2,13 +2,9 @@
 
 #include <factory.h>
 
-void ObjectOne::print()
+void ObjectOne_print()
 {
-    printAddress("lib1", &Factory::noop);
-}
-
-extern "C" void ObjectOne_print()
-{
-    ObjectOne::print();
+    printAddress("lib1 value  ", Factory::get());
+    printAddress("lib1 address", &Factory::get);
 }
 

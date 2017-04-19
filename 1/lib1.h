@@ -1,9 +1,6 @@
 #ifndef INCLUDED_LIB1
 #define INCLUDED_LIB1
 
-struct ObjectOne
-{
-    static void print();
-};
+extern "C" void ObjectOne_print();
 
 #endif
