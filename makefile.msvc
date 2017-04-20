@@ -1,0 +1,50 @@
+all: app/app.exe
+
+factory/factory.obj: factory/factory.h factory/factory.cpp
+	cl -nologo -EHsc \
+	    -c -Fo$@ \
+	    -Ifactory \
+	    factory/factory.cpp
+
+1/lib1.obj: 1/lib1.h 1/lib1.cpp
+	cl -nologo -EHsc \
+	    -c -Fo$@ \
+	    -Ifactory -I1 \
+	    1/lib1.cpp
+
+2/lib2.obj: 2/lib2.h 2/lib2.cpp
+	cl -nologo -EHsc \
+	    -c -Fo$@ \
+	    -Ifactory -I2 \
+	    2/lib2.cpp
+
+app/app.m.obj: app/app.m.cpp
+	cl -nologo -EHsc \
+	    -c -Fo$@ \
+	    app/app.m.cpp
+
+1/lib1.dll: 1/lib1.obj factory/factory.obj
+	cl -nologo -EHsc -LD \
+	    -Fe$@ \
+	    1/lib1.obj factory/factory.obj \
+	    -link -export:ObjectOne_print -noimplib
+
+2/lib2.dll: 2/lib2.obj factory/factory.obj
+	cl -nologo -EHsc -LD \
+	    -Fe$@ \
+	    2/lib2.obj factory/factory.obj \
+	    -link -export:ObjectTwo_print -noimplib
+
+app/app.exe: app/app.m.obj 1/lib1.dll 2/lib2.dll
+	cl -nologo -EHsc \
+	    -Fe$@ \
+	    app/app.m.obj
+
+clean:
+	rm -f factory/factory.obj \
+	    1/lib1.obj 1/lib1.dll \
+	    2/lib2.obj 2/lib2.dll \
+	    app/app.m.obj app/app
+
+.PHONY: clean
+
